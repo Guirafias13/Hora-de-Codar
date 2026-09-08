@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //3.6. Leia 6 notas válidas (de 0 a 10), calcule e exiba a média simples.
+        let soma = 0;
+        let n = 1;
+
+        while (n <= 6) {
+            let nota = parseFloat(prompt("Digite a " + n + "ª nota (0 a 10):"));
+
+            while (nota < 0 || nota > 10) {
+                nota = parseFloat(prompt("Nota inválida! Digite a " + n + "ª nota novamente (0 a 10):"));
+            }
+
+            soma += nota;
+            n++
+        }
+
+        let media = soma / 6;
+        alert("Média final: " + media);
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
