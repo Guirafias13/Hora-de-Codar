@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 3.2</title>
+    <script>
+        // 3.2. Leia dois valores. Enquanto o segundo valor for menor ou igual a zero, peça novamente esse mesmo valor. Ao final, mostre a divisão do primeiro pelo segundo.
+
+        var num1 = Number(prompt('Digite o primeiro valor:'));
+        var num2 = Number(prompt('Digite o segundo valor:'));
+
+        while (num2 <= 0) {
+            num2 = Number(prompt('Valor inválido! O segundo valor não pode ser menor ou igual a zero. Digite novamente:'));
+        }
+
+        var divisao = num1 / num2;
+
+        alert('A divisão de ' + num1 + ' por ' + num2 + ' é igual a: ' + divisao);
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

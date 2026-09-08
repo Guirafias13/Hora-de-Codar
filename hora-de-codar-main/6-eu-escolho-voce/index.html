@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eu escolho você</title>
+</head>
+
+<body>
+
+    <!-- Simulador de lançamento de dados -->
+
+    <div class="container">
+        <img id="img-dado" src="imagens/1.svg" alt="" />
+        <p id="txt-dado"></p>
+
+        <button id="lancar-dado">
+            Lançar
+        </button>
+
+    </div>
+
+    <script>
+
+        var imgDado = document.getElementById('img-dado');
+        var txtDado = document.getElementById('txt-dado');
+        var lancarDado = document.getElementById('lancar-dado');
+
+        var imagens = [
+            'imagens/1.svg',
+            'imagens/2.svg',
+            'imagens/3.svg',
+            'imagens/4.svg',
+            'imagens/5.svg',
+            'imagens/6.svg'
+        ];
+
+        var textos = [
+            'Você tirou o número Um',
+            'Dois é o número',
+            'Três é o número da sorte',
+            'Quatro for the win',
+            'Sua sorte é o Cinco',
+            'Seis é o número da vitória'
+        ];
+
+        lancarDado.addEventListener('click', function () {
+            var numero = Math.floor(Math.random() * 6);
+            imgDado.src = imagens[numero];
+            txtDado.innerHTML = textos[numero];
+        });
+
+    </script>
+
+</body>
+
+</html>

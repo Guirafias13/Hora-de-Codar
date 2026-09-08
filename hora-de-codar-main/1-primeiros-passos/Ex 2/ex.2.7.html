@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 2.7</title>
+    <script>
+        // 2.7. Leia 6 números. Some apenas os valores menores que 72. Exiba a soma e todos os valores informados.
+        
+        var num1 = Number(prompt('Digite o primeiro valor:'));
+        var num2 = Number(prompt('Digite o segundo valor:'));
+        var num3 = Number(prompt('Digite o terceiro valor:'));
+        var num4 = Number(prompt('Digite o quarto valor:'));
+        var num5 = Number(prompt('Digite o quinto valor:'));
+        var num6 = Number(prompt('Digite o sexto valor:'));
+
+        var soma = 0;
+
+        if (num1 < 72) {
+            soma += num1;
+        }
+        if (num2 < 72) {
+            soma += num2;
+        }
+        if (num3 < 72) {
+            soma += num3;
+        }
+        if (num4 < 72) {
+            soma += num4;
+        }
+        if (num5 < 72) {
+            soma += num5;
+        }
+        if (num6 < 72) {
+            soma += num6;
+        }
+
+        alert('A soma dos números menores que 72 é: ' + soma);
+        alert('Todos os valores informados foram: ' + num1 + ', ' + num2 + ', ' + num3 + ', ' + num4 + ', ' + num5 + ', ' + num6);
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

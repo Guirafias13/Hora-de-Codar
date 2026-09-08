@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 3.4</title>
+    <script>
+        // 3.4. Leia dois inteiros (sendo o primeiro menor que o segundo) e calcule a média desses números e de todos os inteiros entre eles.
+
+        // CORREÇÃO 1: Adicionado o Number() para transformar o texto em número
+        var n1 = Number(prompt('Digite o primeiro número: '));
+        var n2 = Number(prompt('Digite o segundo número (maior que o primeiro): '));
+
+        var quantidade = 0;
+        var soma = 0;
+        var n = n1
+
+        while (n <= n2) {
+            n++
+            soma = soma + n;            // Soma o número atual
+            quantidade = quantidade + 1; // Conta mais um número
+        }
+
+        var media = soma / quantidade;
+
+        alert('A média aritmética de ' + n1 + ' até ' + n2 + ' é: ' + media);
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
