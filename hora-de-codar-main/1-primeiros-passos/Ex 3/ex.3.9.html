@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //3.9. Leia 10 valores e informe quantos estão no intervalo de 24 a 42 (inclusive) e quantos estão fora.
+        let dentroIntervalo = 0;
+        let foraIntervalo = 0;
+        let count = 0;
+
+        while (count < 10) {
+            let valor = parseInt(prompt("Digite um valor:"));
+            if (valor >= 24 && valor <= 42) {
+                dentroIntervalo++;
+            } else {
+                foraIntervalo++;
+            }
+            count++;
+        }
+        
+        alert("Valores dentro do intervalo: " + dentroIntervalo);
+        alert("Valores fora do intervalo: " + foraIntervalo);
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
