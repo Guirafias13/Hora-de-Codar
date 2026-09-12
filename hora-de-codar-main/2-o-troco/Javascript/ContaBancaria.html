@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Caixa Eletrônico</title>
+	<script>
+		// Variáveis Globais
+		var nome = prompt('Qual o seu nome?');
+		alert('Olá ' + nome + ', é um prazer ter você por aqui!');
+
+		var saldo = 100.5;
+		var extrato = [
+			"Depósito: R$ 500.00",
+			"Compra Debito: -R$ 120.00",
+			"Depósito: R$ 200.00"
+		];
+
+		const senhaCorreta = '3589';
+
+		// Função para validar a senha. Retorna verdadeiro se correta, ou chama a função de origem se errada.
+		function validarSenha(funcaoOrigem) {
+			var senhaInformada = prompt('Informe a sua senha:');
+			if (senhaInformada === senhaCorreta) {
+				return true;
+			} else {
+				alert('Senha incorreta!');
+				funcaoOrigem(); // Recarrega a função atual conforme a regra
+				return false;
+			}
+		}
+
+		/* Função principal */
+		function inicio() {
+			// Menu na ordem correta solicitada (1 a 6)
+			var escolha = parseInt(prompt('Selecione uma opção:\n1.) Saldo\n2.) Extrato\n3.) Saque\n4.) Depósito\n5.) Transferência\n6.) Sair'));
+
+			switch (escolha) {
+				case 1:
+					ver_saldo();
+					break;
+				case 2:
+					ver_extrato();
+					break;
+				case 3:
+					fazer_saque();
+					break;
+				case 4:
+					fazer_deposito();
+					break;
+				case 5:
+					fazer_transferencia();
+					break;
+				case 6:
+					sair();
+					break;
+				default:
+					erro();
+			}
+		}
+
+		function ver_saldo() {
+			if (!validarSenha(ver_saldo)) return; // Valida a senha antes de exibir
+
+			alert('Seu saldo atual é: R$ ' + saldo.toFixed(2));
+			inicio();
+		}
+
+		function ver_extrato() {
+			if (!validarSenha(ver_extrato)) return; // Valida a senha antes de exibir
+
+			alert('--- EXTRATO INTERNO ---\n' + extrato.join('\n'));
+			inicio();
+		}
+
+		function fazer_deposito() {
+			var deposito = parseFloat(prompt('Qual o valor para depósito?'));
+
+			// Validação estrita: não aceita menor/igual a zero ou letras
+			if (isNaN(deposito) || deposito <= 0) {
+				alert('Operação não autorizada');
+				inicio();
+			} else {
+				saldo += deposito;
+				extrato.push("Depósito: +R$ " + deposito.toFixed(2)); // Atualiza o extrato
+				alert("Depósito realizado com sucesso!");
+				inicio();
+			}
+		}
+
+		function fazer_saque() {
+			if (!validarSenha(fazer_saque)) return; // Valida a senha antes de iniciar
+
+			var saque = parseFloat(prompt('Qual o valor para saque?'));
+
+			// Validação estrita de saldo e valores menores/iguais a zero
+			if (isNaN(saque) || saque <= 0 || saque > saldo) {
+				alert('Operação não autorizada');
+				inicio();
+			} else {
+				saldo -= saque;
+				extrato.push("Saque: -R$ " + saque.toFixed(2)); // Atualiza o extrato
+				alert("Saque realizado com sucesso!");
+				inicio();
+			}
+		}
+
+		function fazer_transferencia() {
+			if (!validarSenha(fazer_transferencia)) return; // Valida a senha antes de iniciar
+
+			var contaDestino = prompt('Qual o número da conta para transferência?');
+
+			// Garante que a conta tenha apenas números e não seja vazia
+			if (contaDestino === '' || isNaN(contaDestino) || !/^\d+$/.test(contaDestino)) {
+				alert('Operação não autorizada');
+				inicio();
+				return;
+			}
+
+			var transferencia = parseFloat(prompt('Qual o valor para transferência?'));
+
+			// Validação estrita do valor de transferência
+			if (isNaN(transferencia) || transferencia <= 0 || transferencia > saldo) {
+				alert('Operação não autorizada');
+				inicio();
+			} else {
+				saldo -= transferencia;
+				extrato.push("Transf. para Conta " + contaDestino + ": -R$ " + transferencia.toFixed(2)); // Atualiza o extrato
+				alert("Transferência realizada com sucesso!");
+				inicio();
+			}
+		}
+
+		/* Mensagem de erro corrigida conforme nova ortografia solicitada */
+		function erro() {
+			alert('Por favor, informe um número entre 1 a 6');
+			inicio();
+		}
+
+		function sair() {
+			var confirma = confirm('Você deseja sair?');
+			if (confirma) {
+				// Mensagem de encerramento personalizada com o nome
+				alert('Obrigado por utilizar os serviços do nosso banco, ' + nome + '! Foi um prazer ter você por aqui!');
+			} else {
+				inicio();
+			}
+		}
+
+		// Executa o sistema ao abrir a página
+		inicio();
+	</script>
+</head>
+
+<body>
+</body>
+
+</html>
