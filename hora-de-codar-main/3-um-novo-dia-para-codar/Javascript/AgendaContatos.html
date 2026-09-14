@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Contatos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .comandos {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .comando-badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-sair {
+            background: #e53e3e;
+        }
+
+        .btn-sair:hover {
+            background: #c53030;
+            box-shadow: 0 5px 15px rgba(229, 62, 62, 0.4);
+        }
+
+        .btn-limpar {
+            background: #718096;
+        }
+
+        .btn-limpar:hover {
+            background: #4a5568;
+            box-shadow: 0 5px 15px rgba(113, 128, 150, 0.4);
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+            min-height: 100px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .output h3 {
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mensagem {
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 8px;
+            background: white;
+            border-left: 4px solid #667eea;
+            animation: slideIn 0.3s ease;
+        }
+
+        .mensagem.sucesso {
+            border-left-color: #48bb78;
+            color: #22543d;
+        }
+
+        .mensagem.erro {
+            border-left-color: #fc8181;
+            color: #742a2a;
+        }
+
+        .mensagem.info {
+            border-left-color: #4299e1;
+            color: #2a4365;
+        }
+
+        .mensagem.destaque {
+            border-left-color: #ed8936;
+            color: #7b341e;
+            font-weight: bold;
+        }
+
+        .contato-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #48bb78;
+            display: flex;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease;
+        }
+
+        .contato-nome {
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .contato-telefone {
+            color: #718096;
+        }
+
+        .vazio {
+            color: #a0aec0;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            background: #edf2f7;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .status span {
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Agenda de Contatos</h1>
+        <p class="subtitle">Gerencie seus contatos de forma simples</p>
+
+
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <button onclick="adicionarContato()" style="flex: 1;">Adicionar</button>
+            <button onclick="buscarContato()" style="flex: 1;">Buscar</button>
+            <button onclick="removerContato()" style="flex: 1;">Remover</button>
+
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <button onclick="listarContatos()" style="flex: 1;">Listar</button>
+
+            <button onclick="limparOutput()" class="btn-limpar" style="flex: 1;">Limpar</button>
+        </div>
+
+        <div class="output" id="output">
+            <h3>Output</h3>
+            <div class="mensagem info">&nbsp;</div>
+        </div>
+
+        <div class="status">
+            Total de contatos: <span id="totalContatos">0</span>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin: 20px 0;">
+            <button onclick="sair()" class="btn-sair" style="flex: 1;">Sair</button>
+        </div>
+    </div>
+
+    <script>
+        // Array para armazenar os contatos
+        let contatos = [];
+
+        // Elemento de saída
+        const output = document.getElementById('output');
+        const totalSpan = document.getElementById('totalContatos');
+        const comandoInput = document.getElementById('comandoInput');
+
+        // Função para adicionar mensagem ao output
+        function addMensagem(texto, tipo = 'info') {
+            const div = document.createElement('div');
+            div.className = `mensagem ${tipo}`;
+            div.textContent = texto;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Função para limpar o output (mantém apenas o título)
+        function limparOutput() {
+            output.innerHTML = '<h3>📝 Saída</h3>';
+            addMensagem('Output limpo!', 'info');
+        }
+
+        // Função para atualizar o contador de contatos
+        function atualizarContador() {
+            totalSpan.textContent = contatos.length;
+        }
+
+        // Função para exibir a lista de contatos formatada
+        function exibirListaContatos() {
+            // Remove mensagens anteriores (mantém o título)
+            const titulo = output.querySelector('h3');
+            output.innerHTML = '';
+            output.appendChild(titulo);
+
+            if (contatos.length === 0) {
+                addMensagem('Nenhum contato cadastrado.', 'info');
+            } else {
+                addMensagem('=== LISTA DE CONTATOS ===', 'destaque');
+                contatos.forEach((contato, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'contato-item';
+                    div.innerHTML = `
+                        <span class="contato-nome">${contato.nome}</span>
+                        <span class="contato-telefone">${contato.telefone}</span>
+                    `;
+                    // Insere após o título
+                    output.insertBefore(div, output.children[1]);
+                });
+                addMensagem(`Total: ${contatos.length} contato(s)`, 'info');
+            }
+            atualizarContador();
+        }
+
+        // Função para adicionar contato
+        function adicionarContato() {
+            const nome = prompt('Digite o nome do contato:');
+            if (nome === null) return; // Cancelou
+
+            if (nome.trim() === '') {
+                addMensagem('Nome não pode estar vazio!', 'erro');
+                return;
+            }
+
+            const telefone = prompt('Digite o telefone do contato:');
+            if (telefone === null) return;
+
+            if (telefone.trim() === '') {
+                addMensagem('Telefone não pode estar vazio!', 'erro');
+                return;
+            }
+
+            contatos.push({ nome: nome.trim(), telefone: telefone.trim() });
+            addMensagem(`✅ Contato "${nome}" adicionado com sucesso!`, 'sucesso');
+            atualizarContador();
+        }
+
+        // Função para buscar contato
+        function buscarContato() {
+            const nome = prompt('Digite o nome do contato para buscar:');
+            if (nome === null) return;
+
+            if (nome.trim() === '') {
+                addMensagem('Digite um nome para buscar!', 'erro');
+                return;
+            }
+
+            const encontrado = contatos.find(c =>
+                c.nome.toLowerCase() === nome.trim().toLowerCase()
+            );
+
+            if (encontrado) {
+                addMensagem(`${encontrado.nome} - Telefone: ${encontrado.telefone}`, 'sucesso');
+            } else {
+                addMensagem(`Contato "${nome}" não encontrado`, 'erro');
+            }
+        }
+
+        // Função para remover contato
+        function removerContato() {
+            const nome = prompt('Digite o nome do contato para remover:');
+            if (nome === null) return;
+
+            if (nome.trim() === '') {
+                addMensagem('Digite um nome para remover!', 'erro');
+                return;
+            }
+
+            const index = contatos.findIndex(c =>
+                c.nome.toLowerCase() === nome.trim().toLowerCase()
+            );
+
+            if (index !== -1) {
+                const removido = contatos[index];
+                contatos.splice(index, 1);
+                addMensagem(`Contato "${removido.nome}" removido com sucesso!`, 'sucesso');
+                atualizarContador();
+            } else {
+                addMensagem(`Contato "${nome}" não encontrado para remoção`, 'erro');
+            }
+        }
+
+        // Função para listar contatos
+        function listarContatos() {
+            exibirListaContatos();
+        }
+
+        // Função para sair
+        function sair() {
+            addMensagem(`Agenda encerrada. Total de contatos: ${contatos.length}`, 'destaque');
+            addMensagem('Obrigado por usar a Agenda de Contatos!', 'info');
+
+            // Desabilita os botões (opcional)
+            const botoes = document.querySelectorAll('button');
+            botoes.forEach(btn => btn.disabled = true);
+            comandoInput.disabled = true;
+
+            // Mostra mensagem final
+            setTimeout(() => {
+                alert(`Agenda encerrada. Total de contatos: ${contatos.length}`);
+            }, 300);
+        }
+
+        // Função para executar comando pelo input de texto
+        function executarComando() {
+            const comando = comandoInput.value.trim().toUpperCase();
+
+            if (comando === '') {
+                addMensagem('Digite um comando!', 'erro');
+                return;
+            }
+
+            switch (comando) {
+                case 'ADICIONAR':
+                    adicionarContato();
+                    break;
+                case 'BUSCAR':
+                    buscarContato();
+                    break;
+                case 'REMOVER':
+                    removerContato();
+                    break;
+                case 'LISTAR':
+                    listarContatos();
+                    break;
+                case 'SAIR':
+                    sair();
+                    break;
+                default:
+                    addMensagem(`Comando "${comando}" inválido! Use: ADICIONAR, BUSCAR, REMOVER, LISTAR ou SAIR`, 'erro');
+            }
+
+            comandoInput.value = '';
+        }
+
+        // Permitir executar comando com Enter
+        comandoInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                executarComando();
+            }
+        });
+
+        // Inicialização
+        atualizarContador();
+        addMensagem('✅ Sistema pronto! Use os botões ou digite um comando.', 'sucesso');
+        addMensagem('💡 Dica: ADICIONAR, BUSCAR, REMOVER, LISTAR ou SAIR', 'info');
+    </script>
+</body>
+
+</html>

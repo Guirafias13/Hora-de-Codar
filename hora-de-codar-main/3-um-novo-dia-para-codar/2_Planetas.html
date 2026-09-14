@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Planetas</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .cartao {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+
+        h2 {
+            color: #333333;
+            margin-top: 0;
+        }
+
+        .sucesso {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 18px;
+            background-color: #e8f8f0;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #27ae60;
+        }
+
+        .erro {
+            color: #c0392b;
+            font-weight: bold;
+            font-size: 18px;
+            background-color: #fde8e8;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cartao">
+        <h2>Resultado da Busca:</h2>
+        <div id="tela"></div>
+    </div>
+
+    <script>
+
+        let planetas = ["Mercúrio", " Vênus", " Terra", " Marte", " Júpiter", " Saturno", " Urano", " Netuno", " Plutão"];
+
+        alert("Planetas no sistema: " + planetas);
+        let planetaDigitado = prompt("Digite o nome de um planeta:");
+
+        let encontrado = false;
+
+        for (let i = 0; i < planetas.length; i++) {
+            if (planetas[i] == planetaDigitado) {
+                encontrado = true; // Achou!
+            }
+        }
+
+        if (encontrado == true) {
+            document.getElementById("tela").innerHTML = "<p class='sucesso'>O planeta " + planetaDigitado + " está na lista!</p>";
+        } else {
+            document.getElementById("tela").innerHTML = "<p class='erro'>O planeta " + planetaDigitado + " NÃO foi encontrado.</p>";
+        }
+    </script>
+
+</body>
+
+</html>

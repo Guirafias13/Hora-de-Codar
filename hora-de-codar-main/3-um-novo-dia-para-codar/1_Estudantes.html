@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Estudantes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #eef2f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .conteudo {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 360px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        b {
+            color: #3498db;
+            font-size: 18px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        li {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="conteudo">
+        <h2>Estudantes</h2>
+
+        <div id="tela"></div>
+    </div>
+
+    <script>
+        let estudantes = [];
+
+        while (true) {
+            let nome = prompt("Digite o nome do estudante (ou PARE para encerrar):");
+
+            if (nome === null || nome.toUpperCase() === "PARE") {
+                break;
+            }
+
+            if (nome.trim() !== "") {
+                estudantes.push(nome);
+            }
+        }
+
+        document.getElementById("tela").innerHTML = `
+            <p>Total de cadastrados: <b>${estudantes.length}</b></p>
+            <ul id="lista"></ul>
+        `;
+
+        for (let estudante of estudantes) {
+            document.getElementById("lista").innerHTML += `<li>${estudante}</li>`;
+        }
+    </script>
+
+</body>
+
+</html>
