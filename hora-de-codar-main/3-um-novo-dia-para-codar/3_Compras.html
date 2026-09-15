@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+</head>
+
+<body>
+    <script>
+        var frutas = ['Maçã', 'Banana', 'Uva', 'Morango', 'Melancia', 'Abacaxi', 'Laranja', 'Abacate', 'Goiaba', 'Manga', 'Ameixa', 'Kiwi', 'Pessêgo'];
+
+        while (frutas.length > 0) {
+            const itemDigitado = prompt("Sua lista tem: " + frutas.join(', ') + "\nQual deseja remover?");
+
+
+            if (!itemDigitado || itemDigitado.trim().toUpperCase() === 'PARE') {
+                console.log("Lista restante:", frutas);
+                break;
+            }
+
+            const posicao = frutas.findIndex(f => f.toLowerCase() === itemDigitado.toLowerCase());
+
+            if (posicao > -1) {
+                frutas.splice(posicao, 1);
+                alert("Fruta foi retirada da lista");
+            } else {
+                alert("Fruta indisponível no nosso mercado");
+            }
+        }
+
+        alert("Lista de compras finalizada");
+        console.log("Lista de compras finalizada");
+    </script>
+</body>
+
+</html>
