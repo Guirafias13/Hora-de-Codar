@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BichinhoVirtual</title>
+
+</head>
+
+<body>
+
+    <h2>Meu Bichinho Virtual</h2>
+    <div id="mensagens"></div>
+
+    <script>
+
+        function mostrarMensagem(mensagem) {
+            document.getElementById("mensagens").innerHTML += `<p>${mensagem}</p>`;
+        }
+
+
+        // Classe Principal (normalmente em um arquivo externo)
+        class BichinhoVirtual {
+            constructor(nome) {
+                this.nome = nome;
+                this.nivelDeFome = 50;
+                this.nivelFelicidade = 50;
+                this.nivelCansaco = 0;
+                this.idade = 0;
+            }
+
+            limites() {
+                this.nivelDeFome = Math.max(0, Math.min(this.nivelDeFome, 100));
+                this.nivelFelicidade = Math.max(0, Math.min(this.nivelFelicidade, 100));
+                this.nivelCansaco = Math.max(0, Math.min(this.nivelCansaco, 100));
+            }
+
+            alimentar() {
+                this.nivelDeFome -= 10;
+                this.limites();
+                mostrarMensagem(`${this.nome} foi alimentado. O nível de fome diminuiu.`);
+            }
+
+            descansar() {
+                this.nivelCansaco -= 20;
+                this.limites();
+                mostrarMensagem(`${this.nome} está descansando e recuperando energia.`);
+            }
+
+            brincar() {
+                this.nivelFelicidade += 10;
+                this.nivelCansaco += 15;
+                this.limites();
+                mostrarMensagem(`${this.nome} está brincando e se sentindo mais feliz.`);
+            }
+
+            verificarStatus() {
+                mostrarMensagem(`Status atual de ${this.nome}:`);
+                mostrarMensagem(`Nível de fome: ${this.nivelDeFome}`);
+                mostrarMensagem(`Nível de felicidade: ${this.nivelFelicidade}`);
+                mostrarMensagem(`Nível de cansaço: ${this.nivelCansaco}`);
+                mostrarMensagem(`Idade: ${this.idade}`);
+            }
+
+
+            passarTempo() {
+                this.nivelDeFome += 3;
+                this.nivelFelicidade -= 3;
+                this.nivelCansaco += 10;
+                this.idade += 1;
+
+                this.limites();
+
+                mostrarMensagem(`${this.nome} está ficando mais faminto e cansado com o passar do tempo.`);
+
+                if (this.verificarDerrota()) {
+                    mostrarMensagem(`Fim de jogo! ${this.nome} não conseguiu continuar.`);
+                    jogando = false;
+                } else if (this.verificarVitoria()) {
+                    mostrarMensagem(`Parabéns! ${this.nome} chegou à idade de 50 anos!`);
+                    jogando = false;
+                }
+            }
+
+
+            verificarDerrota() {
+                if (this.nivelDeFome >= 100 || this.nivelCansaco >= 100 || this.nivelFelicidade <= 0) {
+                    return true;
+                }
+                return false;
+            }
+
+            verificarVitoria() {
+                if (this.idade >= 50) {
+                    return true;
+                }
+                return false;
+            }
+        }
+    </script>
+    <script>
+
+        const nomePet = prompt("Digite o nome do seu animal de estimação:")
+            || "Baltazar Guilherme Tenório";
+
+        const pet = new BichinhoVirtual(nomePet);
+        let jogando = true;
+
+        mostrarMensagem("Bem-vindo ao Simulador de Animal de Estimação Virtual!");
+
+        function jogar() {
+            if (!jogando) return;
+
+            const escolha = Number(prompt(
+                "Escolha uma opção:\n" +
+                "1. Alimentar\n" +
+                "2. Descansar\n" +
+                "3. Brincar\n" +
+                "4. Verificar status\n" +
+                "5. Sair"
+            ));
+
+            switch (escolha) {
+                case 1:
+                    pet.alimentar();
+                    break;
+                case 2:
+                    pet.descansar();
+                    break;
+                case 3:
+                    pet.brincar();
+                    break;
+                case 4:
+                    pet.verificarStatus();
+                    break;
+                case 5:
+                    mostrarMensagem("Você saiu do jogo. Até mais!");
+                    jogando = false;
+                    return;
+                default:
+                    mostrarMensagem("Escolha inválida. Tente novamente.");
+            }
+
+            if (!jogando) return;
+
+            pet.passarTempo();
+
+            if (jogando) {
+                setTimeout(jogar, 100);
+            }
+        }
+
+        jogar();
+
+    </script>
+
+</body>
+
+</html>
